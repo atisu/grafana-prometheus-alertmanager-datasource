@@ -22,6 +22,25 @@
 
   <div class="gf-form-inline">
     <div class="gf-form">
+      <div class="gf-form-label width-8 query-keyword">Suppressed/ inhibited alerts?</div>
+      <div class="gf-form-select-wrapper">
+        <select class="gf-form-input" ng-model="ctrl.target.suppressed" ng-options="f as f for f in ['true', 'false']"></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="gf-form-inline">
+    <div class="gf-form">
+      <div class="gf-form-label width-8 query-keyword">Silenced alerts?</div>
+      <div class="gf-form-select-wrapper">
+        <select class="gf-form-input" ng-model="ctrl.target.silenced" ng-options="f as f for f in ['true', 'false']"></select>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="gf-form-inline">
+    <div class="gf-form">
       <div class="gf-form-label width-8 query-keyword">Format</div>
       <div class="gf-form-select-wrapper">
         <select class="gf-form-input" ng-model="ctrl.target.type" ng-options="f as f for f in ['single', 'table']"></select>

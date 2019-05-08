@@ -96,7 +96,7 @@ System.register(["lodash"], function (_export, _context) {
               var labelSelector = this.parseLabelSelector(query.targets[0].labelSelector);
               var filter = encodeURIComponent(this.templateSrv.replace(query.targets[0].expr, options.scopedVars, this.interpolateQueryExpr) || "");
               return this.backendSrv.datasourceRequest({
-                url: this.url + '/api/v1/alerts?silenced=false&inhibited=false&filter=' + filter,
+                url: this.url + '/api/v1/alerts?silenced=' + query.targets[0].silenced + '&inhibited='+ query.targets[0].suppressed + '&filter=' + filter,
                 data: query,
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -134,6 +134,10 @@ System.register(["lodash"], function (_export, _context) {
                           }
                         }
                       }
+		      if ('status' in columnsDict) {
+                          row[columnsDict['status']] = item['status']['state'];
+                      }
+
                     } catch (err) {
                       _didIteratorError = true;
                       _iteratorError = err;
@@ -184,7 +188,7 @@ System.register(["lodash"], function (_export, _context) {
             } else {
               var _filter = encodeURIComponent(this.templateSrv.replace(query.targets[0].expr, options.scopedVars, this.interpolateQueryExpr) || "");
               return this.backendSrv.datasourceRequest({
-                url: this.url + '/api/v1/alerts?silenced=false&inhibited=false&filter=' + _filter,
+                url: this.url + '/api/v1/alerts?silenced=' + query.targets[0].silenced + '&inhibited='+ query.targets[0].suppressed + '&filter=' + _filter,
                 data: query,
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -319,7 +323,7 @@ System.register(["lodash"], function (_export, _context) {
                     severityDefined = true;
                   }
                   columnsDict[selectedLabel] = index++;
-                }
+                } 
               }
             }
             if (!severityDefined) {
@@ -356,7 +360,9 @@ System.register(["lodash"], function (_export, _context) {
                 refId: target.refId,
                 hide: target.hide,
                 type: target.type || 'single',
-                legendFormat: target.legendFormat || ""
+                legendFormat: target.legendFormat || "",
+                suppressed: target.suppressed,
+                silenced: target.silenced
               };
             });
             return options;
